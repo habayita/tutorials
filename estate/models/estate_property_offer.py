@@ -1,6 +1,7 @@
 from odoo import api, fields, models
 from datetime import date
 from dateutil.relativedelta import relativedelta
+from odoo.exceptions import UserError
 
 class EstatePropertyOffer(models.Model):
 	_name = "estate.property.offer"
@@ -24,3 +25,26 @@ class EstatePropertyOffer(models.Model):
 		for record in self:
 			base_date = record.create_date.date() if record.create_date else fields.Date.context_today(record)
 			record.validity = (record.date_deadline - base_date).days
+	
+
+	def action_accept_button(self):
+		for record in self:
+			if record.property_id.state=='Sold':
+				raise UserError('this property is already sold')
+			if record.property_id.state=='Cancelled':
+				raise UserError('this property is cancelled and connot be sold')
+			
+			record.property_id.write({
+                'buyer_id': record.partner_id,
+                'selling_price': record.price,
+				'state': 'Sold'
+            })
+
+			record.status='Accepted'
+
+		return True
+
+	def action_refuse_button(self):
+		for record in self:
+			record.status='Refused'
+		return True
