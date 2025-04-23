@@ -22,7 +22,7 @@ class EstateProperty(models.Model):
 	garden_area = fields.Integer()
 	garden_orientation = fields.Selection(string='Garden Orientation', selection=[('North', 'north'), ('South', 'south'), ('East', 'east'), ('West', 'west')])
 	active = fields.Boolean(default=True)
-	state = fields.Selection(string='Status', selection=[('New', 'new'),('Offer Received', 'offer received'),('Offer Accepted', 'offer accepted'),('Sold', 'sold'),('Cancelled', 'cancelled')], required=True, copy=False, default='New')
+	state = fields.Selection(string='Status', selection=[('New', 'New'),('Offer Received', 'Offer Received'),('Offer Accepted', 'Offer Accepted'),('Sold', 'Sold'),('Cancelled', 'cancelled')], required=True, copy=False, default='New')
 	property_type_id = fields.Many2one("estate.property.type", string="Property Type")
 	salesman_id = fields.Many2one("res.users", string='Salesman', default= lambda self: self.env.user)
 	buyer_id = fields.Many2one("res.partner", string='Buyer', copy=False)
