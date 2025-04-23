@@ -70,7 +70,7 @@
 						</page>
 						<page string="Offers">
 							<group>
-								<field name="offer_ids"/>
+								<field name="offer_ids" nolabel="1"/>
 							</group>
 						</page>
 						<page string="Other Info">
